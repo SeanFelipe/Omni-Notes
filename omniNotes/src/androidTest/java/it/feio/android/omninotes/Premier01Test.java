@@ -1,6 +1,7 @@
 package it.feio.android.omninotes;
 
 
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -13,6 +14,7 @@ import androidx.test.runner.AndroidJUnit4;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,23 +23,24 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class FieldWireSandbox {
+public class Premier01Test {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void fieldWireSandbox() {
+    public void premier01Test() {
         ViewInteraction viewInteraction = onView(
             allOf(withId(R.id.fab_expand_menu_button),
                 childAtPosition(
@@ -69,38 +72,53 @@ public class FieldWireSandbox {
                             0)),
                     1),
                 isDisplayed()));
-        editText.perform(replaceText("as"), closeSoftKeyboard());
+        editText.perform(click());
 
-        ViewInteraction linearLayout = onView(
-            allOf(withId(R.id.reminder_layout),
+        ViewInteraction editText2 = onView(
+            allOf(withId(R.id.detail_title),
                 childAtPosition(
-                    childAtPosition(
-                        withClassName(is("android.widget.LinearLayout")),
-                        1),
-                    2)));
-        linearLayout.perform(scrollTo(), click());
-
-        ViewInteraction appCompatCheckedTextView = onView(
-            allOf(withId(R.id.pm_label), withText("PM"),
-                childAtPosition(
-                    allOf(withId(R.id.ampm_layout),
+                    allOf(withId(R.id.title_wrapper),
                         childAtPosition(
-                            withId(R.id.time_header),
-                            3)),
+                            withId(R.id.detail_tile_card),
+                            0)),
                     1),
                 isDisplayed()));
-        appCompatCheckedTextView.perform(click());
+        editText2.perform(click());
 
-        ViewInteraction appCompatButton = onView(
-            allOf(withId(R.id.buttonPositive), withText("Ok"),
+        ViewInteraction editText3 = onView(
+            allOf(withId(R.id.detail_title),
                 childAtPosition(
-                    allOf(withId(R.id.button_layout),
+                    allOf(withId(R.id.title_wrapper),
                         childAtPosition(
-                            withId(R.id.llMainContentHolder),
-                            2)),
-                    5),
+                            withId(R.id.detail_tile_card),
+                            0)),
+                    1),
                 isDisplayed()));
-        appCompatButton.perform(click());
+        editText3.perform(replaceText("the listof lists"), closeSoftKeyboard());
+
+        ViewInteraction editTextMultiLineNoEnter = onView(
+            allOf(childAtPosition(
+                childAtPosition(
+                    withClassName(is("it.feio.android.checklistview.models.CheckListViewItem")),
+                    0),
+                2),
+                isDisplayed()));
+        editTextMultiLineNoEnter.perform(replaceText("item one"), closeSoftKeyboard());
+
+        ViewInteraction editTextMultiLineNoEnter2 = onView(
+            allOf(childAtPosition(
+                childAtPosition(
+                    withClassName(is("it.feio.android.checklistview.models.CheckListViewItem")),
+                    0),
+                2),
+                isDisplayed()));
+        editTextMultiLineNoEnter2.perform(replaceText("item two"), closeSoftKeyboard());
+
+        ViewInteraction editText4 = onView(
+            allOf(withText("item two"),
+                withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
+                isDisplayed()));
+        editText4.check(matches(withText("item two")));
     }
 
     private static Matcher<View> childAtPosition(

@@ -1,46 +1,67 @@
 package it.feio.android.omninotes;
 
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
+import android.util.Log;
 
-import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static androidx.test.espresso.Espresso.onData;
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
+import it.feio.android.omninotes.mobileprism.screens.Alpha;
+import it.feio.android.omninotes.mobileprism.screens.NewNote;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EditSandbox {
+public class PrismTests {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    /*
     @Test
-    public void editSandbox() {
+    public void createNewNote() throws InterruptedException {
+        Alpha.expandMenu.click();
+        Alpha.optionsMenu.click();
+        NewNote.title.set("prism title 9");
+        //Alpha.mostRecentNote.
+        Thread.sleep(500);
+    }
+
+    @Test
+    public void editExistingNote() throws InterruptedException {
+        Alpha.expandMenu.click();
+        Alpha.optionsMenu.click();
+        NewNote.title.set("editExistingNote");
+        //Thread.sleep(5000);
+    }
+
+    */
+    //public void editAndCancel() throws InterruptedException {
+    @Test
+    public void matcherProto() throws InterruptedException {
+        String text = "matcherProto 1";
+        Alpha.expandMenu.click();
+        Alpha.optionsMenu.click();
+        NewNote.title.set(text);
+        Thread.sleep(500);
+        NewNote.title.matchesText(text);
+        //NewNote.title.matchesText("foobar");
+    }
+
+    @Test
+    public void checkFirstProto() throws InterruptedException {
+        Alpha.expandMenu.click();
+        Log.d("swolfe", "checkFirstProto 3");
+        Log.d("swolfe", Alpha.mostRecentNoteTitle.toString());
+        Thread.sleep(5000);
+    }
+    /*
+    @Test
+    public void boschTest01() {
         ViewInteraction viewInteraction = onView(
             allOf(withId(R.id.fab_expand_menu_button),
                 childAtPosition(
@@ -72,59 +93,47 @@ public class EditSandbox {
                             0)),
                     1),
                 isDisplayed()));
-        editText.perform(replaceText("edit me"), closeSoftKeyboard());
-
-        // back button
-        ViewInteraction appCompatImageButton = onView(
-            allOf(withContentDescription("drawer open"),
-                childAtPosition(
-                    allOf(withId(R.id.toolbar),
-                        childAtPosition(
-                            withClassName(is("android.widget.RelativeLayout")),
-                            0)),
-                    0),
-                isDisplayed()));
-        appCompatImageButton.perform(click());
-
-        // first item in list
-        DataInteraction frameLayout = onData(anything())
-            .inAdapterView(allOf(withId(R.id.list),
-                childAtPosition(
-                    withClassName(is("android.widget.FrameLayout")),
-                    0)))
-            .atPosition(0);
-        frameLayout.perform(click());
+        editText.perform(click());
 
         ViewInteraction editText2 = onView(
+            allOf(withId(R.id.detail_title),
+                childAtPosition(
+                    allOf(withId(R.id.title_wrapper),
+                        childAtPosition(
+                            withId(R.id.detail_tile_card),
+                            0)),
+                    1),
+                isDisplayed()));
+        editText2.perform(replaceText("previously"), closeSoftKeyboard());
+
+        ViewInteraction editText3 = onView(
             allOf(withId(R.id.detail_content),
                 childAtPosition(
                     childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         1),
                     0)));
-        editText2.perform(scrollTo(), replaceText("adding "), closeSoftKeyboard());
+        editText3.perform(scrollTo(), replaceText("on Bosch"), closeSoftKeyboard());
 
-        ViewInteraction appCompatImageButton2 = onView(
-            allOf(withContentDescription("drawer open"),
+        ViewInteraction linearLayout = onView(
+            allOf(withId(R.id.reminder_layout),
                 childAtPosition(
-                    allOf(withId(R.id.toolbar),
-                        childAtPosition(
-                            withClassName(is("android.widget.RelativeLayout")),
-                            0)),
-                    0),
-                isDisplayed()));
-        appCompatImageButton2.perform(click());
+                    childAtPosition(
+                        withClassName(is("android.widget.LinearLayout")),
+                        1),
+                    2)));
+        linearLayout.perform(scrollTo(), click());
 
-        ViewInteraction appCompatImageButton3 = onView(
-            allOf(withContentDescription("drawer open"),
+        ViewInteraction materialButton = onView(
+            allOf(withId(R.id.buttonPositive), withText("Ok"),
                 childAtPosition(
-                    allOf(withId(R.id.toolbar),
+                    allOf(withId(R.id.button_layout),
                         childAtPosition(
-                            withClassName(is("android.widget.RelativeLayout")),
-                            0)),
-                    0),
+                            withId(R.id.llMainContentHolder),
+                            2)),
+                    5),
                 isDisplayed()));
-        appCompatImageButton3.perform(click());
+        materialButton.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
@@ -145,4 +154,5 @@ public class EditSandbox {
             }
         };
     }
+    */
 }
