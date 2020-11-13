@@ -1,4 +1,4 @@
-package it.feio.android.omninotes;
+package it.feio.android.omninotes.mobileprism.tests.prev;
 
 
 import android.util.Log;
@@ -11,8 +11,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import it.feio.android.omninotes.mobileprism.screens.Alpha;
-import it.feio.android.omninotes.mobileprism.screens.NewNote;
+import it.feio.android.omninotes.MainActivity;
+import it.feio.android.omninotes.mobileprism.screens.AlphaScreen;
+import it.feio.android.omninotes.mobileprism.screens.NewNoteScreen;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -21,16 +22,23 @@ public class PrismTests {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
-    /*
     @Test
     public void createNewNote() throws InterruptedException {
-        Alpha.expandMenu.click();
-        Alpha.optionsMenu.click();
-        NewNote.title.set("prism title 9");
+        AlphaScreen.expandMenu.click();
+        AlphaScreen.optionsMenu.click();
+        NewNoteScreen.title.set("prism title 13");
         //Alpha.mostRecentNote.
+        String t = NewNoteScreen.title.getText(mActivityTestRule);
+        Log.d("swolfe", "NewNote string: " + t);
+        //NewNote.title.matchesText("prism title 11");
         Thread.sleep(500);
+        NewNoteScreen.back.click();
+        Thread.sleep(3000);
+        //String t = Alpha.mostRecentNoteTitle.getText(mActivityTestRule);
+        //Log.d("swolfe", "most recent string: " + t);
     }
 
+    /*
     @Test
     public void editExistingNote() throws InterruptedException {
         Alpha.expandMenu.click();
@@ -41,15 +49,17 @@ public class PrismTests {
 
     */
     //public void editAndCancel() throws InterruptedException {
+    /*
+
     @Test
     public void matcherProto() throws InterruptedException {
-        String text = "matcherProto 1";
+        String text = "matcherProto 3";
         Alpha.expandMenu.click();
         Alpha.optionsMenu.click();
         NewNote.title.set(text);
         Thread.sleep(500);
         NewNote.title.matchesText(text);
-        //NewNote.title.matchesText("foobar");
+        NewNote.title.matchesText("foobar");
     }
 
     @Test
@@ -59,7 +69,7 @@ public class PrismTests {
         Log.d("swolfe", Alpha.mostRecentNoteTitle.toString());
         Thread.sleep(5000);
     }
-    /*
+
     @Test
     public void boschTest01() {
         ViewInteraction viewInteraction = onView(

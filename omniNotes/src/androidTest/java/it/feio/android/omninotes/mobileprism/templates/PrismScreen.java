@@ -2,6 +2,8 @@ package it.feio.android.omninotes.mobileprism.templates;
 
 import androidx.test.espresso.DataInteraction;
 
+import org.hamcrest.Matcher;
+
 import it.feio.android.omninotes.R;
 
 import static androidx.test.espresso.Espresso.onData;
@@ -14,6 +16,10 @@ public abstract class PrismScreen {
     //return new PrismElement(ref, rid);
     public static PrismElement genel(int rid) {
         return new PrismElement(rid);
+    }
+
+    public static PrismElement genel(Matcher m) {
+        return new PrismElement(m);
     }
 
     public static PrismElement first(int rid) {
