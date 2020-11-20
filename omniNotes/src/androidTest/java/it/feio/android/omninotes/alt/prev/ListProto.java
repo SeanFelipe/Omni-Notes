@@ -1,79 +1,50 @@
-package it.feio.android.omninotes.mobileprism.tests.prev;
+package it.feio.android.omninotes.alt.prev;
 
 
-import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import it.feio.android.omninotes.MainActivity;
-import it.feio.android.omninotes.mobileprism.screens.AlphaScreen;
-import it.feio.android.omninotes.mobileprism.screens.NewNoteScreen;
+import it.feio.android.omninotes.R;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class PrismTests {
+public class ListProto {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void createNewNote() throws InterruptedException {
-        AlphaScreen.expandMenu.click();
-        AlphaScreen.optionsMenu.click();
-        NewNoteScreen.title.set("prism title 13");
-        //Alpha.mostRecentNote.
-        String t = NewNoteScreen.title.getText(mActivityTestRule);
-        Log.d("swolfe", "NewNote string: " + t);
-        //NewNote.title.matchesText("prism title 11");
-        Thread.sleep(500);
-        NewNoteScreen.back.click();
-        Thread.sleep(3000);
-        //String t = Alpha.mostRecentNoteTitle.getText(mActivityTestRule);
-        //Log.d("swolfe", "most recent string: " + t);
-    }
-
-    /*
-    @Test
-    public void editExistingNote() throws InterruptedException {
-        Alpha.expandMenu.click();
-        Alpha.optionsMenu.click();
-        NewNote.title.set("editExistingNote");
-        //Thread.sleep(5000);
-    }
-
-    */
-    //public void editAndCancel() throws InterruptedException {
-    /*
-
-    @Test
-    public void matcherProto() throws InterruptedException {
-        String text = "matcherProto 3";
-        Alpha.expandMenu.click();
-        Alpha.optionsMenu.click();
-        NewNote.title.set(text);
-        Thread.sleep(500);
-        NewNote.title.matchesText(text);
-        NewNote.title.matchesText("foobar");
-    }
-
-    @Test
-    public void checkFirstProto() throws InterruptedException {
-        Alpha.expandMenu.click();
-        Log.d("swolfe", "checkFirstProto 3");
-        Log.d("swolfe", Alpha.mostRecentNoteTitle.toString());
-        Thread.sleep(5000);
-    }
-
-    @Test
-    public void boschTest01() {
+    public void listProto() {
         ViewInteraction viewInteraction = onView(
-            allOf(withId(R.id.fab_expand_menu_button),
+            Matchers.allOf(ViewMatchers.withId(R.id.fab_expand_menu_button),
                 childAtPosition(
                     allOf(withId(R.id.fab),
                         childAtPosition(
@@ -114,7 +85,7 @@ public class PrismTests {
                             0)),
                     1),
                 isDisplayed()));
-        editText2.perform(replaceText("previously"), closeSoftKeyboard());
+        editText2.perform(replaceText("listy list"), closeSoftKeyboard());
 
         ViewInteraction editText3 = onView(
             allOf(withId(R.id.detail_content),
@@ -123,27 +94,29 @@ public class PrismTests {
                         withClassName(is("android.widget.LinearLayout")),
                         1),
                     0)));
-        editText3.perform(scrollTo(), replaceText("on Bosch"), closeSoftKeyboard());
+        editText3.perform(scrollTo(), replaceText("auspicious"), closeSoftKeyboard());
 
-        ViewInteraction linearLayout = onView(
-            allOf(withId(R.id.reminder_layout),
+        ViewInteraction appCompatImageButton = onView(
+            allOf(withContentDescription("drawer open"),
                 childAtPosition(
-                    childAtPosition(
-                        withClassName(is("android.widget.LinearLayout")),
-                        1),
-                    2)));
-        linearLayout.perform(scrollTo(), click());
-
-        ViewInteraction materialButton = onView(
-            allOf(withId(R.id.buttonPositive), withText("Ok"),
-                childAtPosition(
-                    allOf(withId(R.id.button_layout),
+                    allOf(withId(R.id.toolbar),
                         childAtPosition(
-                            withId(R.id.llMainContentHolder),
-                            2)),
-                    5),
+                            withClassName(is("android.widget.RelativeLayout")),
+                            0)),
+                    0),
                 isDisplayed()));
-        materialButton.perform(click());
+        appCompatImageButton.perform(click());
+
+        ViewInteraction frameLayout = onView(
+            allOf(withId(R.id.root),
+                childAtPosition(
+                    allOf(withId(R.id.list),
+                        childAtPosition(
+                            withClassName(is("android.widget.FrameLayout")),
+                            0)),
+                    0),
+                isDisplayed()));
+        frameLayout.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
@@ -164,5 +137,4 @@ public class PrismTests {
             }
         };
     }
-    */
 }

@@ -1,4 +1,4 @@
-package it.feio.android.omninotes.mobileprism.tests.prev;
+package it.feio.android.omninotes.alt.prev;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
